@@ -31,8 +31,8 @@ export default function TodoApp() {
          return;
       }
 
-      setInputError(true);
-      inputRef.current.title = ''; // clear title if previously set
+      setInputError(false);
+      inputRef.current.title = '';
       inputRef.current.classList.remove('input-warning');
 
       const newTask = {
@@ -59,9 +59,15 @@ export default function TodoApp() {
             placeholder='Enter a task...'
             value={taskText}
             onChange={handleChange}
+            onFocus={() => {
+               setInputError(false);
+               inputRef.current.classList.remove('input-warning');
+               inputRef.current.title = '';
+            }}
             onKeyDown={handleKeyDown}
             className={inputError ? 'input-error' : ''}
          />
+
          <button onClick={handleAddTask}>Add Task</button>
 
          {inputError && (
