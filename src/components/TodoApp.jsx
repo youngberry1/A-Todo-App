@@ -1,10 +1,24 @@
 import { useState, useRef } from 'react';
 import './TodoApp.css';
+import { useEffect } from 'react';
 
 export default function TodoApp() {
    const inputRef = useRef(null);
    const [tasks, setTasks] = useState([]);
    const [taskText, setTaskText] = useState('');
+
+   // ✅ Load saved tasks from localStorage on component mount
+   useEffect(() => {
+      const saved = localStorage.getItem('tasks');
+      if (saved) {
+         setTasks(JSON.parse(saved));
+      }
+   }, []);
+
+   // ✅ Save tasks to localStorage whenever tasks change
+   useEffect(() => {
+      localStorage.setItem('tasks', JSON.stringify(tasks));
+   }, [tasks]);
 
    const handleChange = (e) => setTaskText(e.target.value);
 
