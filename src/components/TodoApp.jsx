@@ -6,6 +6,7 @@ export default function TodoApp() {
    const inputRef = useRef(null);
    const [tasks, setTasks] = useState([]);
    const [taskText, setTaskText] = useState('');
+   const [inputError, setInputError] = useState(false);
 
    // ✅ Load saved tasks from localStorage on component mount
    useEffect(() => {
@@ -23,7 +24,18 @@ export default function TodoApp() {
    const handleChange = (e) => setTaskText(e.target.value);
 
    const handleAddTask = () => {
-      if (taskText.trim() === '') return;
+      if (taskText.trim() === '') {
+         inputRef.current.title = 'Please enter a task';
+         inputRef.current.classList.add('input-warning');
+         setInputError(true);
+         inputRef.current.focus();
+         return;
+      }
+
+      setInputError(true);
+      inputRef.current.title = ''; // clear title if previously set
+      inputRef.current.classList.remove('input-warning');
+
       const newTask = {
          id: Date.now(),
          text: taskText.trim(),
@@ -49,8 +61,13 @@ export default function TodoApp() {
             value={taskText}
             onChange={handleChange}
             onKeyDown={handleKeyDown}
+            className={inputError ? 'input-error' : ''}
          />
          <button onClick={handleAddTask}>Add Task</button>
+
+         {inputError && (
+            <p className='error-text'>Please enter a task before adding.</p>
+         )}
 
          <ul>
             {tasks.map((task) => (

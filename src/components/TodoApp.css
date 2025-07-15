@@ -54,3 +54,19 @@
    margin-top: 1rem;
    font-weight: bold;
 }
+
+.input-warning {
+   border: 2px solid red;
+   background-color: #ffecec;
+}
+
+.input-error {
+   border: 2px solid red;
+   background-color: #ffecec;
+}
+
+.error-text {
+   color: red;
+   margin-top: 4px;
+   font-size: 0.9rem;
+}
