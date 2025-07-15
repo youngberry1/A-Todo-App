@@ -28,7 +28,6 @@ export default function TodoApp() {
          inputRef.current.title = 'Please enter a task';
          inputRef.current.classList.add('input-warning');
          setInputError(true);
-         inputRef.current.focus();
          return;
       }
 
